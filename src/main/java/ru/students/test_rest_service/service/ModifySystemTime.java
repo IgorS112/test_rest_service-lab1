@@ -1,19 +1,18 @@
 package ru.students.test_rest_service.service;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.students.test_rest_service.model.Response;
 
-
-
 @Service
 @RequiredArgsConstructor
-@Qualifier("id1")
-public class ModifyUid implements MyModifyService {
+@Qualifier("ModifySystemTime")
+public class ModifySystemTime implements MyModifyService {
     @Override
     public Response modify(Response response) {
-        response.setUid("100500");
-        return response;
+        response.setSystemTime("2023-03-13T08:00:00.731+00:00");
+        return null;
     }
 }
