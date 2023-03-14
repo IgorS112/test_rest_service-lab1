@@ -21,7 +21,7 @@ public class MyController {
     private final MyModifyService myModifyService;
 
     @Autowired
-    public MyController(@Qualifier("id1") MyModifyService myModifyService) {
+    public MyController(@Qualifier("ModifySystemTime") MyModifyService myModifyService) {
         this.myModifyService = myModifyService;
     }
 
@@ -44,6 +44,7 @@ public class MyController {
                 .build();
 
         Response responseAfterModify = myModifyService.modify(response);
+        log.info("Исходящий response : " + response);
 
 
 
