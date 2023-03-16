@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.students.test_rest_service.model.Request;
 import ru.students.test_rest_service.model.Response;
+import ru.students.test_rest_service.service.ModifyRequestService;
 import ru.students.test_rest_service.service.MyModifyService;
 
 
@@ -19,10 +20,13 @@ import ru.students.test_rest_service.service.MyModifyService;
 public class MyController {
 
     private final MyModifyService myModifyService;
+    private final ModifyRequestService modifyRequestService;
 
     @Autowired
-    public MyController(@Qualifier("ModifySystemTime") MyModifyService myModifyService) {
+    public MyController(@Qualifier("ModifySystemTime") MyModifyService myModifyService,
+                        ModifyRequestService modifyRequestService) {
         this.myModifyService = myModifyService;
+        this.modifyRequestService = modifyRequestService;
     }
 
 
@@ -30,9 +34,10 @@ public class MyController {
     @PostMapping(value = "/feedback")
     public ResponseEntity<Response> feedback(@RequestBody Request request){
 
-        System.out.println("hello");
+        //System.out.println("hello");
 
-        log.info("Входящий request : " + request);
+        //log.info("Входящий request : " + request);
+        log.warn("входящий request :" + (request));
 
         Response response = Response.builder()
                 .uid(request.getUid())
@@ -42,14 +47,15 @@ public class MyController {
                 .errorCode("")
                 .errorMessage("")
                 .build();
+        modifyRequestService.modifyRq(request);
 
         Response responseAfterModify = myModifyService.modify(response);
         log.info("Исходящий response : " + response);
 
 
 
-        log.warn("Опасно");
-        log.warn("Очень опасно");
+        log.warn("Исходящий response:" + (response));
+        //log.warn("Очень опасно");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
